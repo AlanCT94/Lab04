@@ -11,7 +11,7 @@ linreg_qr <- function(formula, data) {
   #- Checks part II: y numeric
   stopifnot(is.numeric(y))
   
-  X <- model.matrix(object=formula, data=data)
+  X <-stats::model.matrix(object=formula, data=data)
   
   #- Estimate beta_hat (w. qr factorization)
   QR <- qr_hr(X)
@@ -46,7 +46,7 @@ linreg_qr <- function(formula, data) {
   t_beta <- beta_hat/sqrt(beta_hat_var)
   
   #- Calculate p-values
-  p_values <- 2*pt(abs(t_beta),df, lower.tail = FALSE)
+  p_values <- 2*stats::pt(abs(t_beta),df, lower.tail = FALSE)
   
   # Collect results
   linres <- list(#call = call,
