@@ -8,6 +8,7 @@ plot.linreg <- function(obj) {
   #----------------------------------------------------------------------------#
   #- Data management for plotting
   #----------------------------------------------------------------------------#
+  
   #- Standardized residuals
   resid_std <- resid(obj)/sqrt(obj$residual_variance)
   resid_std_abs_sqrt <- sqrt(abs(resid_std))

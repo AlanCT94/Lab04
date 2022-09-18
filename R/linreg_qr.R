@@ -1,4 +1,5 @@
 linreg_qr <- function(formula, data) {
+  
   #- Checks part I
   stopifnot(class(formula)=="formula",is.data.frame(data))
   
