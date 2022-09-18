@@ -6,8 +6,7 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: It calculates all the formulas to compute a linear regression
               from a data frame and one dependant and multiple independant variable.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
