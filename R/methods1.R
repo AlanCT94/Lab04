@@ -4,7 +4,7 @@ print.linreg<- function(obj){
   cat("linreg(",format(obj$formula),",data=",obj$data1,")","\n")
   cat("\n")
   cat("Coefficients:","\n")
-  return(obj$coefficients)
+  print(obj$coefficients)
 }
 resid.linreg<- function(obj){
 
