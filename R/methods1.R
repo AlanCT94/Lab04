@@ -1,7 +1,7 @@
 print.linreg <- function(obj){
 
   cat("Call:","\n")
-  cat("lm(",format(obj$formula),",data=",obj$data1,")","\n")
+  cat("linreg(",format(obj$formula),",data=",obj$data1,")","\n")
   cat("\n")
   cat("Coefficients:","\n")
   print(obj$coefficients_variance)
