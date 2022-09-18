@@ -12,7 +12,6 @@ qr_hr <- function (A) {
   
   #- Apply Householder reflection algorithm
   i <- 1
-  
   while (i <= p ) {
     v <- as.matrix(cbind(rep(0,n)))
     v[i:n] <- A[i:n,i]

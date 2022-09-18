@@ -17,7 +17,6 @@ linreg_qr <- function(formula, data) {
   #- Estimate beta_hat (w. qr factorization)
   QR <- qr_hr(X)
   beta_hat_1 <- solve(QR$R,t(QR$Q)%*%y)
-  
   beta_hat <- as.vector(beta_hat_1)
   names(beta_hat) <- dimnames(beta_hat_1)[[1]]
   
