@@ -60,7 +60,7 @@ plot.linreg <- function(obj) {
 
     ggplot2::labs(title="Residuals Vs Fitted",
                y="Residuals", x="Fitted values", caption=paste0(cpt)) +
-    ggplot2::theme(plot.title = element_text(hjust = 0.5),
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5),
           plot.caption = ggplot2::element_text(hjust = 0.5))
 
   plot(pl1)
@@ -73,7 +73,7 @@ plot.linreg <- function(obj) {
     ggplot2::ylim(0, round(max(resid_std_abs_sqrt),1)) +
 
     ggplot2::geom_text(ggplot2::aes(label=ifelse((resid_std_abs_sqrt>=third_topval),
-              as.character(id),'')),hjust=-0.2, vjust=-0.2, check_overlap = TRUE,
+              as.character(df$id),'')),hjust=-0.2, vjust=-0.2, check_overlap = TRUE,
               size=3) +
 
     ggplot2::geom_line(data=resid_std_abs_sqrt_means, ggplot2::aes(color="mean")) +
@@ -84,8 +84,8 @@ plot.linreg <- function(obj) {
     ggplot2::labs(title="Scale-Location",
         y=expression(sqrt("|standardised residuals|")), x="Fitted values",
         caption=paste0(cpt),col="T") +
-    ggplot2::theme(plot.title = element_text(hjust = 0.5),
-          plot.caption = element_text(hjust = 0.5))
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5),
+          plot.caption = ggplot2::element_text(hjust = 0.5))
   plot(pl2)
 
 }
