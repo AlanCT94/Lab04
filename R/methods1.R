@@ -1,18 +1,18 @@
-print.linreg <- function(obj){
+print.linreg<- function(obj){
 
   cat("Call:","\n")
   cat("linreg(",format(obj$formula),",data=",obj$data1,")","\n")
   cat("\n")
   cat("Coefficients:","\n")
-  print(obj$coefficients)
+  return(obj$coefficients)
 }
-resid.linreg <- function(obj){
+resid.linreg<- function(obj){
 
   cat("Residuals:","\n")
   return(obj$residuals)
 
 }
-pred.linreg <- function(obj){
+pred<- function(obj){
   cat("Predicted vaues y","\n")
   return(obj$fitted_values)
 }
