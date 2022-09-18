@@ -2,8 +2,9 @@ linreg <- function(formula, data){
   stopifnot(class(formula) != formula) #check is it's a formula object
   stopifnot(is.data.frame(data)) # check that the data is a data.frame
 
+
 #With model matrix we are extracting the X matrix
-  X <- model.matrix(formula,data)         # independent variable
+  X <- stats::model.matrix(formula,data)         # independent variable
   y <- data[all.vars(formula)[1]]         # we took the all the columns of the Y variable(dependant)
   y1<- as.matrix(y)                       # we transform the Y's dependant variable from a data.frame format to a matrix, for us to be able to make operations
 
