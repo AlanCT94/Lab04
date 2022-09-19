@@ -1,15 +1,15 @@
 #' Methods of function linreg
 #'
-#' @param obj Refers to the res variable return by the linreg function
+#' @param obj Refers to the res variable return by the linear regression function
 #'
 #' @return c, obj$residuals, obj$fitted_values, format(obj$coefficients),
 #' @export
 #'
 #' @examples data(iris)
 #'           s<-linreg(Petal.Length~Species, iris)
-#'           print.linreg(s)
+#'           linreg.print(s)
 #'
-print.linreg <- function(obj){
+linreg.print <- function(obj){
   c<-as.vector(obj$coefficients)
   names(c)<- row.names(obj$coefficients)
   cat("\n")
@@ -19,7 +19,7 @@ print.linreg <- function(obj){
   cat("Coefficients:","\n")
   return(c)
 }
-resid.linreg <- function(obj){
+linreg.resid <- function(obj){
 
   cat("Residuals:","\n")
   return(obj$residuals)
@@ -29,11 +29,11 @@ pred <- function(obj){
   cat("Predicted vaues y","\n")
   return(obj$fitted_values)
 }
-coef.linreg <- function(obj){
+linreg.coef <- function(obj){
   cat("Returns the coefficients","\n")
   return(format(obj$coefficients))
 }
-summary.linreg <- function(obj){
+linreg.summary <- function(obj){
   sumlin <- data.frame(c= row.names(obj$coefficients),
                        Estimate = as.vector(obj$coefficients),
                        Std.Error = sqrt(obj$coefficients_variance), t_value = as.vector(obj$coefficients_tvalues),
