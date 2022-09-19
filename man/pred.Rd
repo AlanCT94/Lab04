@@ -7,7 +7,7 @@
 pred(obj)
 }
 \arguments{
-\item{obj}{}
+\item{obj}{Refers to the res variable return by the linear regression function}
 }
 \value{
 obj$fitted_values

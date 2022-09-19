@@ -7,9 +7,9 @@
 #'
 #' @examples data(iris)
 #'           s<-linreg(formula=Petal.Length~Species, data=iris)
-#'           linreg.print(s)
+#'           print(s)
 #'
-linreg.print <- function(obj){
+print.linreg <- function(obj){
   c<-as.vector(obj$coefficients)
   names(c)<- row.names(obj$coefficients)
   cat("\n")
@@ -21,15 +21,15 @@ linreg.print <- function(obj){
 }
 #' Residual of the linear regression function
 #'
-#' @param obj
+#' @param obj Refers to the res variable return by the linear regression function
 #'
 #' @return obj$residuals
 #' @export
 #'
 #' @examples data(iris)
 #'           s<-linreg(formula=Petal.Length~Species, data= iris)
-#'           linreg.print(s)
-linreg.resid <- function(obj){
+#'           resid(s)
+resid.linreg <- function(obj){
 
   cat("Residuals:","\n")
   return(obj$residuals)
@@ -38,7 +38,7 @@ linreg.resid <- function(obj){
 
 #' Predicted values
 #'
-#' @param obj
+#' @param obj Refers to the res variable return by the linear regression function
 #'
 #' @return obj$fitted_values
 #' @export
@@ -54,29 +54,29 @@ pred <- function(obj){
 
 #' Coefficients
 #'
-#' @param obj
+#' @param obj Refers to the res variable return by the linear regression function
 #'
 #' @return obj$coefficients
 #' @export
 #'
 #' @examples data(iris)
 #'           s<-linreg(formula=Petal.Length~Species, data= iris)
-#'           linreg.coef(s)
-linreg.coef <- function(obj){
+#'           coef(s)
+coef.linreg <- function(obj){
   cat("Returns the coefficients","\n")
   return(format(obj$coefficients))
 }
 #' Summary of linear regression function
 #'
-#' @param obj
+#' @param obj Refers to the res variable return by the linear regression function
 #'
 #' @return data frame with the final computations
 #' @export
 #'
 #' @examples data(iris)
 #'           s<-linreg(formula=Petal.Length~Species, data= iris)
-#'           linreg.summary(s)
-linreg.summary <- function(obj){
+#'           summary(s)
+summary.linreg <- function(obj){
 
   sumlin <- data.frame(c= row.names(obj$coefficients),
                        Estimate = as.vector(obj$coefficients),
