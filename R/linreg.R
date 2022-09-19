@@ -37,11 +37,13 @@ linreg <- function(formula, data){
   #The t-values for each coefficient
   tB <- B/sqrt(diag(varB))                  #it has to be only the diagonal values of varB, because otherwise you took the variance and covariance of the formula
   #return(tB)                              # notice the difference of the notation between varB and varB with hat on the varB Lab4 pdf
+  #The p values
+  p_v <- 2*pt(as.vector(tB),df,lower.tail = FALSE)
 
   data1 <- format(deparse(substitute(data))) # extract the name of the data frame, before adding the parameter to the list
                                             #deparse() transform unvaluated expression to strings in conjunction with substitute helps to extract labels from a data frame, helpful for plot labels
   res <- list(formula=formula,data1=data1,coefficients=B,fitted_values= as.vector(y_h), df=df,residuals=as.vector(e)  ,residual_variance=as.numeric(Rvar),
-                 coefficients_variance= diag(varB), coefficients_tvalues=tB) #, coefficients_palues=p_values
+                 coefficients_variance= diag(varB), coefficients_tvalues=as.vector(tB), coefficients_pvalues=p_v) #, coefficients_palues=p_values
   class(res) ="linreg"                      #creating the type of class
   return(res)                               #you must return the list of your function to be able to implement methods outside the function in a S3 structur
 
