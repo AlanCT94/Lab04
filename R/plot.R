@@ -1,3 +1,14 @@
+#' Plot
+#'
+#' @param obj linreg object 
+#'
+#' @return ggplot object
+#' @export
+#'
+#' @examples
+#' data(iris)
+#' linres <- linreg(formula=Sepal.Length ~ Petal.Length + Petal.Width, data=iris)
+#' plot(linres)
 plot.linreg <- function(obj) {
   #----------------------------------------------------------------------------#
   #- Set data for plotting
