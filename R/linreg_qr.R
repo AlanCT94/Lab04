@@ -1,3 +1,18 @@
+#' Linreg_qr
+#' 
+#' Linreg_qr is used to carry out multiple linear regression, with qr factorization
+#' to estimate the coeffcients and the variance of the coefficients.
+#'
+#' @param formula an object of class "formula"
+#' @param data a dataframe containing the variables in the formula
+#'
+#' @return returns object of class "linreg"
+#' @export
+#'
+#' @examples
+#' data(iris)
+#' linres <- linreg(formula=Sepal.Length ~ Petal.Length + Petal.Width, data=iris)
+
 linreg_qr <- function(formula, data) {
   #- Checks part I
   stopifnot(class(formula)=="formula",is.data.frame(data))

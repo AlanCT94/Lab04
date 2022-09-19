@@ -1,3 +1,17 @@
+#' QR factorization with Householder reflection
+#'
+#' @param A n x p (p <= n) matrix for which to do the QR factorization 
+#'
+#' @return list with Q and R matrices
+#' @export
+#'
+#' @examples
+#' data(iris)
+#' formula <- Sepal.Length ~ Petal.Length + Petal.Width
+#' data <- iris
+#' X <-stats::model.matrix(object=formula, data=data)
+#' QR <- qr_hr(X)
+
 qr_hr <- function (A) {
   
   #- Check of input
