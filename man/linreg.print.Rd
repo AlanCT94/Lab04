@@ -17,7 +17,7 @@ Methods of function linreg
 }
 \examples{
 data(iris)
-          s<-linreg(Petal.Length~Species, iris)
+          s<-linreg(formula=Petal.Length~Species, data=iris)
           linreg.print(s)
 
 }
