@@ -1,3 +1,14 @@
+#' Methods of function linreg
+#'
+#' @param obj Refers to the res variable return by the linreg function
+#'
+#' @return c, obj$residuals, obj$fitted_values, format(obj$coefficients),
+#' @export
+#'
+#' @examples data(iris)
+#'           s<-linreg(Petal.Length~Species, iris)
+#'           print.linreg(s)
+#'
 print.linreg <- function(obj){
   c<-as.vector(obj$coefficients)
   names(c)<- row.names(obj$coefficients)

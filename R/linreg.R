@@ -1,3 +1,13 @@
+#' Linear regression functions
+#'
+#' @param formula Y dependent variable and X independent variable of the data frame
+#' @param data Data frame input by the user
+#'
+#' @return res
+#' @export
+#'
+#' @examples data(iris)
+#'           linreg(Petal.Length~Species, iris)
 linreg <- function(formula, data){
   stopifnot(class(formula) != formula) #check is it's a formula object
   stopifnot(is.data.frame(data)) # check that the data is a data.frame
