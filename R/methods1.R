@@ -103,13 +103,13 @@ plot.linreg <- function(obj) {
   #----------------------------------------------------------------------------#
   #- Set data for plotting
   #----------------------------------------------------------------------------#
-  df <- data.frame(cbind(pred(obj), resid(obj)))
+  df <- data.frame(cbind(pred(obj), resid.linreg(obj)))
 
   #----------------------------------------------------------------------------#
   #- Data management for plotting
   #----------------------------------------------------------------------------#
   #- Standardized residuals
-  resid_std <- resid(obj)/sqrt(obj$residual_variance)
+  resid_std <- resid.linreg(obj)/sqrt(obj$residual_variance)
   resid_std_abs_sqrt <- sqrt(abs(resid_std))
   #- Square root of the absolute value of standardized residuals
   df$resid_std_abs_sqrt <- resid_std_abs_sqrt
