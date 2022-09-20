@@ -1,6 +1,8 @@
-#' Methods of function linreg
+#' Print
+#' 
+#' Prints model call and coefficients
 #'
-#' @param obj Refers to the res variable return by the linear regression function
+#' @param obj Refers to the object return by the linear regression function
 #'
 #' @return c, obj$residuals, obj$fitted_values, format(obj$coefficients),
 #' @export
@@ -20,8 +22,11 @@ print.linreg <- function(obj){
   return(c)
 }
 #' Residual of the linear regression function
+#' 
+#' Returns the residuals
 #'
-#' @param obj Refers to the res variable return by the linear regression function
+#' @param object Refers to the res variable return by the linear regression function
+#' @param ... arguments to be passed to methods
 #'
 #' @return obj$residuals
 #' @export
@@ -29,7 +34,7 @@ print.linreg <- function(obj){
 #' @examples data(iris)
 #'           s<-linreg(formula=Petal.Length~Species, data= iris)
 #'           resid(s)
-resid.linreg <- function(obj){
+residuals.linreg <- function(object, ...){
 
   cat("Residuals:","\n")
   return(obj$residuals)
@@ -37,8 +42,10 @@ resid.linreg <- function(obj){
 }
 
 #' Predicted values
+#' 
+#' Returns the predicted values
 #'
-#' @param obj Refers to the res variable return by the linear regression function
+#' @param obj Refers to the object return by the linear regression function
 #'
 #' @return obj$fitted_values
 #' @export
@@ -53,8 +60,10 @@ pred <- function(obj){
 }
 
 #' Coefficients
+#' 
+#' Returns the coefficients
 #'
-#' @param obj Refers to the res variable return by the linear regression function
+#' @param obj Refers to the object return by the linear regression function
 #'
 #' @return obj$coefficients
 #' @export
@@ -67,8 +76,12 @@ coef.linreg <- function(obj){
   return(format(obj$coefficients))
 }
 #' Summary of linear regression function
+#' 
+#' Returns a summary of the results from the linear regression: estimated
+#' coefficients, their standard errors, tvalues and p-values, as well as
+#' the residual variance.
 #'
-#' @param obj Refers to the res variable return by the linear regression function
+#' @param obj Refers to the object return by the linear regression function
 #'
 #' @return data frame with the final computations
 #' @export
@@ -80,7 +93,8 @@ summary.linreg <- function(obj){
 
   sumlin <- data.frame(c= row.names(obj$coefficients),
                        Estimate = as.vector(obj$coefficients),
-                       Std.Error = sqrt(obj$coefficients_variance), t_value = as.vector(obj$coefficients_tvalues),
+                       Std.Error = sqrt(obj$coefficients_variance), 
+                       t_value = as.vector(obj$coefficients_tvalues),
                        Prt= obj$coefficients_pvalues)
   colnames(sumlin) <- c("","Estimate","Std.Error","t value"," Pr(>|t|)")
   cat("\n","Coefficients","\n")
@@ -88,28 +102,29 @@ summary.linreg <- function(obj){
   cat("\n","Residual standard error:",sqrt(obj$residual_variance),"on",obj$df,"degrees of freedom")
 
 }
-#' Model diagnostic plots
+#' Plot
 #'
-#' @param obj object of type linreg
+#' @param x linreg object
+#' @param ... arguments to be passed to methods
 #'
 #' @return ggplot object
 #' @export
 #'
 #' @examples
 #' data(iris)
-#' s <- linreg(formula=Sepal.Length ~ Petal.Length + Petal.Width, data=iris)
-#' plot(s)
-plot.linreg <- function(obj) {
+#' linres <- linreg(formula=Sepal.Length ~ Petal.Length + Petal.Width, data=iris)
+#' plot(linres)
+plot.linreg <- function(x, ...) {
   #----------------------------------------------------------------------------#
   #- Set data for plotting
   #----------------------------------------------------------------------------#
-  df <- data.frame(cbind(pred(obj), residuals.linreg(obj)))
+  df <- data.frame(cbind(pred(x), residuals.linreg(x)))
   
   #----------------------------------------------------------------------------#
   #- Data management for plotting
   #----------------------------------------------------------------------------#
   #- Standardized residuals
-  resid_std <- residuals.linreg(obj)/sqrt(obj$residual_variance)
+  resid_std <- residuals.linreg(x)/sqrt(x$residual_variance)
   resid_std_abs_sqrt <- sqrt(abs(resid_std))
   #- Square root of the absolute value of standardized residuals
   df$resid_std_abs_sqrt <- resid_std_abs_sqrt
@@ -126,8 +141,8 @@ plot.linreg <- function(obj) {
   ggplot2::theme_set(ggplot2::theme_bw())
   
   #- Common plot parameters
-  cpt <- paste0("linreg(",format(obj$formula),")")
-  x <- "pred"
+  cpt <- paste0("linreg(",format(x$formula),")")
+  xaxis <- "pred"
   xlab <- "Fitted values"
   cutoff_y_var <- "resid_std_abs_sqrt"
   cutoff_y_val <- third_topval
@@ -135,32 +150,32 @@ plot.linreg <- function(obj) {
   
   #- Plot 1
   title1 <- "Residuals Vs Fitted"
-  y1 <- "resid"
+  yaxis1 <- "resid"
   ylab1 <- "Residuals"
   
-  pl1 <- make_plot(df=df, title=title1, cpt=cpt, x=x, y=y1, xlab=xlab,  ylab=ylab1,
+  pl1 <- make_plot(df=df, title=title1, cpt=cpt, xaxis=xaxis, yaxis=yaxis1, xlab=xlab,  ylab=ylab1,
                    cutoff_y_var=cutoff_y_var, cutoff_y_val=cutoff_y_val, id=id)
   
   plot(pl1)
   
   #- Plot 2
   title2 <- "Scale-Location"
-  y2 <- "resid_std_abs_sqrt"
+  yaxis2 <- "resid_std_abs_sqrt"
   ylab2 <- expression(sqrt("|standardised residuals|"))
   
-  pl2 <- make_plot(df=df, title=title2, cpt=cpt, x=x, y=y2, xlab=xlab,  ylab=ylab2,
+  pl2 <- make_plot(df=df, title=title2, cpt=cpt, xaxis=xaxis, yaxis=yaxis2, xlab=xlab,  ylab=ylab2,
                    cutoff_y_var=cutoff_y_var, cutoff_y_val=cutoff_y_val, id=id)
   
   plot(pl2)
   
 }
 
-make_plot <- function(df, title, cpt, x, y, xlab, ylab, cutoff_y_var,
+make_plot <- function(df, title, cpt, xaxis, yaxis, xlab, ylab, cutoff_y_var,
                       cutoff_y_val, id) {
   
-  resid_plot <- df[,y]
+  resid_plot <- df[,yaxis]
   m <- mean(resid_plot)
-  pred_plot <- df[,x]
+  pred_plot <- df[,xaxis]
   id_plot <- df[,id]
   cutoff_y_var <- df[,cutoff_y_var]
   ylim_min <- min(0, round(min(resid_plot),2))
@@ -172,12 +187,21 @@ make_plot <- function(df, title, cpt, x, y, xlab, ylab, cutoff_y_var,
   y_medians <- stats::aggregate(resid_plot, list(pred_plot), FUN=stats::median)
   names(y_medians) <- c("pred_plot","resid_plot")
   
+  #d <- ifelse((cutoff_y_var>=cutoff_y_val),as.character(id_plot),'')
+  #print(d)
+  #print(length(d))
+  
   pl <-
     ggplot2::ggplot(data = df) +
     ggplot2::aes(x=pred_plot, y=resid_plot) +
     ggplot2::geom_point(shape = 1) +
     
     ggplot2::ylim(ylim_min, ylim_max) +
+    
+    #ggplot2::geom_text(ggplot2::aes(label=ifelse((cutoff_y_var>=cutoff_y_val),
+    #                                             as.character(id_plot),'')),
+    #                   hjust="inward, vjust="-0.2"inward, check_overlap = FALSE,
+    #                   position = position_dodge(width = 1), size=3) +
     
     ggplot2::geom_text(ggplot2::aes(label=ifelse((cutoff_y_var>=cutoff_y_val),
                                                  as.character(id_plot),'')),

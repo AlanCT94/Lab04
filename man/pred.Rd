@@ -7,13 +7,13 @@
 pred(obj)
 }
 \arguments{
-\item{obj}{Refers to the res variable return by the linear regression function}
+\item{obj}{Refers to the object return by the linear regression function}
 }
 \value{
 obj$fitted_values
 }
 \description{
-Predicted values
+Returns the predicted values
 }
 \examples{
 data(iris)

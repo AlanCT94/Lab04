@@ -2,18 +2,18 @@
 % Please edit documentation in R/methods1.R
 \name{print.linreg}
 \alias{print.linreg}
-\title{Methods of function linreg}
+\title{Print}
 \usage{
 \method{print}{linreg}(obj)
 }
 \arguments{
-\item{obj}{Refers to the res variable return by the linear regression function}
+\item{obj}{Refers to the object return by the linear regression function}
 }
 \value{
 c, obj$residuals, obj$fitted_values, format(obj$coefficients),
 }
 \description{
-Methods of function linreg
+Prints model call and coefficients
 }
 \examples{
 data(iris)

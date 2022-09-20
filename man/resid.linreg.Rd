@@ -13,7 +13,7 @@
 obj$residuals
 }
 \description{
-Residual of the linear regression function
+Returns the residuals
 }
 \examples{
 data(iris)

@@ -7,13 +7,15 @@
 \method{summary}{linreg}(obj)
 }
 \arguments{
-\item{obj}{Refers to the res variable return by the linear regression function}
+\item{obj}{Refers to the object return by the linear regression function}
 }
 \value{
 data frame with the final computations
 }
 \description{
-Summary of linear regression function
+Returns a summary of the results from the linear regression: estimated
+coefficients, their standard errors, tvalues and p-values, as well as
+the residual variance.
 }
 \examples{
 data(iris)

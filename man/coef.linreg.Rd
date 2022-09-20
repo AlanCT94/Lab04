@@ -7,13 +7,13 @@
 \method{coef}{linreg}(obj)
 }
 \arguments{
-\item{obj}{Refers to the res variable return by the linear regression function}
+\item{obj}{Refers to the object return by the linear regression function}
 }
 \value{
 obj$coefficients
 }
 \description{
-Coefficients
+Returns the coefficients
 }
 \examples{
 data(iris)
