@@ -2,21 +2,21 @@
 % Please edit documentation in R/methods1.R
 \name{plot.linreg}
 \alias{plot.linreg}
-\title{Plot}
+\title{Model diagnostic plots}
 \usage{
 \method{plot}{linreg}(obj)
 }
 \arguments{
-\item{obj}{linreg object}
+\item{obj}{object of type linreg}
 }
 \value{
 ggplot object
 }
 \description{
-Plot
+Model diagnostic plots
 }
 \examples{
 data(iris)
-linres <- linreg(formula=Sepal.Length ~ Petal.Length + Petal.Width, data=iris)
-plot(linres)
+s <- linreg(formula=Sepal.Length ~ Petal.Length + Petal.Width, data=iris)
+plot(s)
 }
