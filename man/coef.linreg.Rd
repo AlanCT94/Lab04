@@ -4,13 +4,15 @@
 \alias{coef.linreg}
 \title{Coefficients}
 \usage{
-\method{coef}{linreg}(obj)
+\method{coef}{linreg}(object, ...)
 }
 \arguments{
-\item{obj}{Refers to the object return by the linear regression function}
+\item{object}{Refers to the object return by the linear regression function}
+
+\item{...}{arguments to be passed to methods}
 }
 \value{
-obj$coefficients
+object$coefficients
 }
 \description{
 Returns the coefficients

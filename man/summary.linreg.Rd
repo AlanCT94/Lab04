@@ -4,10 +4,12 @@
 \alias{summary.linreg}
 \title{Summary of linear regression function}
 \usage{
-\method{summary}{linreg}(obj)
+\method{summary}{linreg}(object, ...)
 }
 \arguments{
-\item{obj}{Refers to the object return by the linear regression function}
+\item{object}{Refers to the object return by the linear regression function}
+
+\item{...}{arguments to be passed to methods}
 }
 \value{
 data frame with the final computations

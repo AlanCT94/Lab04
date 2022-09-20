@@ -4,13 +4,15 @@
 \alias{print.linreg}
 \title{Print}
 \usage{
-\method{print}{linreg}(obj)
+\method{print}{linreg}(x, ...)
 }
 \arguments{
-\item{obj}{Refers to the object return by the linear regression function}
+\item{x}{Refers to the object return by the linear regression function}
+
+\item{...}{arguments to be passed to methods}
 }
 \value{
-c, obj$residuals, obj$fitted_values, format(obj$coefficients),
+Call, Coefficients
 }
 \description{
 Prints model call and coefficients

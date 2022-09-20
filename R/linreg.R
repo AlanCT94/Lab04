@@ -20,8 +20,10 @@ linreg <- function(formula, data){
 
 # Calculation of formulas
     #Beta
-  B <- solve(t(X)%*%X)%*%(t(X)%*%y1)      #solve computes the inverse matrix
+  B_m <-  solve(t(X)%*%X)%*%t(X)%*%y1
 
+  B<- as.vector(B_m)
+  names(B) <- dimnames(B)[[1]]
 
    #fitted values
    y_h <- X%*%B                            #returns the fitted values of all the dependant variables, so it has 1 column and the determine number of rows from all.vars
@@ -48,7 +50,7 @@ linreg <- function(formula, data){
   tB <- B/sqrt(diag(varB))                  #it has to be only the diagonal values of varB, because otherwise you took the variance and covariance of the formula
   #return(tB)                              # notice the difference of the notation between varB and varB with hat on the varB Lab4 pdf
   #The p values
-  p_v <- 2*pt(as.vector(tB),df,lower.tail = FALSE)
+  p_v <- 2*stats::pt(abs(as.vector(tB)),df,lower.tail = FALSE)
 
   data1 <- format(deparse(substitute(data))) # extract the name of the data frame, before adding the parameter to the list
                                             #deparse() transform unvaluated expression to strings in conjunction with substitute helps to extract labels from a data frame, helpful for plot labels

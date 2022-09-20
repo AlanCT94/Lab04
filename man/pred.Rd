@@ -4,13 +4,13 @@
 \alias{pred}
 \title{Predicted values}
 \usage{
-pred(obj)
+pred(object)
 }
 \arguments{
-\item{obj}{Refers to the object return by the linear regression function}
+\item{object}{Refers to the object return by the linear regression function}
 }
 \value{
-obj$fitted_values
+object$fitted_values
 }
 \description{
 Returns the predicted values

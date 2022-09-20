@@ -12,7 +12,7 @@
 \item{...}{arguments to be passed to methods}
 }
 \value{
-obj$residuals
+object$residuals
 }
 \description{
 Returns the residuals
