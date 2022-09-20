@@ -23,7 +23,7 @@ linreg <- function(formula, data){
   B_m <-  solve(t(X)%*%X)%*%t(X)%*%y1
 
   B<- as.vector(B_m)
-  names(B) <- dimnames(B)[[1]]
+  names(B) <- dimnames(B_m)[[1]]
 
    #fitted values
    y_h <- X%*%B                            #returns the fitted values of all the dependant variables, so it has 1 column and the determine number of rows from all.vars
@@ -53,8 +53,9 @@ linreg <- function(formula, data){
   p_v <- 2*stats::pt(abs(as.vector(tB)),df,lower.tail = FALSE)
 
   data1 <- format(deparse(substitute(data))) # extract the name of the data frame, before adding the parameter to the list
-                                            #deparse() transform unvaluated expression to strings in conjunction with substitute helps to extract labels from a data frame, helpful for plot labels
-  res <- list(formula=formula,data1=data1,coefficients=B,fitted_values= as.vector(y_h), df=df,residuals=as.vector(e)  ,residual_variance=as.numeric(Rvar),
+
+  call<-match.call()                                          #deparse() transform unvaluated expression to strings in conjunction with substitute helps to extract labels from a data frame, helpful for plot labels
+  res <- list(call=call,formula=formula,data1=data1,coefficients=B,fitted_values= as.vector(y_h), df=df,residuals=as.vector(e)  ,residual_variance=as.numeric(Rvar),
                  coefficients_variance= diag(varB), coefficients_tvalues=as.vector(tB), coefficients_pvalues=p_v) #, coefficients_palues=p_values
   class(res) ="linreg"                      #creating the type of class
   return(res)                               #you must return the list of your function to be able to implement methods outside the function in a S3 structur

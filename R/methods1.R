@@ -13,14 +13,19 @@
 #'           print(s)
 #'
 print.linreg <- function(x,...){
-  c<-as.vector(x$coefficients)
-  names(c)<- row.names(x$coefficients)
-  cat("\n")
-  cat("Call:","\n")
-  cat("linreg(formula=",format(x$formula),",data=",x$data1,")","\n")
-  cat("\n")
-  cat("Coefficients:","\n")
-  print(c)
+  cat("", sep="\n\n")
+
+  cat("Call:")
+
+  cat("", sep="\n\n")
+
+  print(x$call)
+
+  cat("", sep="\n\n")
+
+  cat("Coefficients:")
+  cat("", sep="\n\n")
+  print(x$coefficients)
 }
 #' Residual of the linear regression function
 #'
@@ -100,7 +105,7 @@ summary.linreg <- function(object,...){
   stderr <- round(sqrt(object$coefficients_variance),5)
   tvalues <- round(object$coefficients_tvalues,2)
   pvalues <- object$coefficients_pvalues
-  coeffs <- as.data.frame(cbind(estimates,stderr,tvalues,pvalues,sign_level))
+
   sign_level <- vector(length=length(estimates))
   sign_level[pvalues<0.1] <- "."
   sign_level[pvalues<0.05] <- "*"
@@ -108,7 +113,7 @@ summary.linreg <- function(object,...){
   sign_level[pvalues<0.001] <- "***"
 
   coeffs <- as.data.frame(cbind(estimates,stderr,tvalues,pvalues,sign_level))
-  colnames(coeffs) <- c("","Estimate","Std.Error","t value"," Pr(>|t|)","")
+  colnames(coeffs) <- c("Estimate","Std.Error","t value"," Pr(>|t|)","")
   cat("\n","Coefficients","\n")
   print(format(coeffs, justify="left"))
   cat("\n","Residual standard error:",res_std_err,"on",df,"degrees of freedom")
