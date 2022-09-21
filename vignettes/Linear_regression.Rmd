@@ -7,29 +7,23 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE,eval= TRUE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   error=TRUE, collapse = TRUE,
   comment = "#>"
 )
-library(Lab04)
 ```
 
 ```{r setup}
 library(Lab04)
-```
-
-METHODS
-Print
-
-It prints the coefficients from the linear regression calculations.
-
-```{r}
-
 data("iris")
-s<-linreg(Petal.Length~Species, data=iris)
-print.linreg(s)
-
+model_object<-linreg(Petal.Length~Species, data=iris)
+print(model_object)
 ```
+
+
+
+
+
 
 
