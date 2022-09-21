@@ -13,7 +13,10 @@ qr_hr(A)
 list with Q and R matrices
 }
 \description{
-QR factorization with Householder reflection
+This function performs QR factorisation with Householder reflection.
+See e.g. Some	Notes	on	Least	Squares, QR-factorization, SVD and
+Fitting. Ove	Edlund, Department of Science and Mathematics
+January 23, 2013. C0002M Numerical Analysis.
 }
 \examples{
 data(iris)
