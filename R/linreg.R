@@ -9,7 +9,7 @@
 #' @examples data(iris)
 #'           linreg(Petal.Length~Species, iris)
 linreg <- function(formula, data){
-  stopifnot(class(formula) != formula) #check is it's a formula object
+  stopifnot(class(formula) == "formula") #check is it's a formula object
   stopifnot(is.data.frame(data)) # check that the data is a data.frame
 
 
