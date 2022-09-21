@@ -23,7 +23,7 @@ linreg <- function(formula, data){
   B_m <-  solve(t(X)%*%X)%*%t(X)%*%y1
 
   B<- as.vector(B_m)
-  names(B) <- dimnames(B_m)[[1]]
+  names(B) <- dimnames(B_m)[[1]]          #adding the names to the vector
 
    #fitted values
    y_h <- X%*%B                            #returns the fitted values of all the dependant variables, so it has 1 column and the determine number of rows from all.vars
