@@ -2,8 +2,8 @@ Package: Lab04
 Title: Linear Regression Package
 Version: 0.0.0.9000
 Authors@R: 
-    person("Kerstin", "Alan", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Kerstin", "Nilsson", email="kerni714@student.liu.se", role = c("aut", "cre"),
+    person("Alan", "Cacique Tamariz", email="alaca734@student-liu.se", role = c("aut", "cre"))
 Description: It calculates all the formulas to compute a linear regression
               from a data frame and one dependant and multiple independant variable.
 License: MIT + file LICENSE
