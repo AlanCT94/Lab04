@@ -9,21 +9,51 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  error=TRUE, collapse = TRUE,
+   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+<style>
+body {
+text-align: justify}
+</style>
+The objective of this package is to compute several characteristics of a
+**Linear Regression**, like: Coefficients, Residual, fitted values, degrees of
+freedom, t-values, etc. Given, by the user, the arguments formula and data.
+*Formula* is an argument of class formula, which contains the
+Y(*dependent*) and X´s(*independent*) variables.
+*Data*is an argument of class data.frame, which contains the data required to
+make all the matrix calculations and return the characteristics.
+
+
+The information below is presented trough the following S3 methods/functions:
+
+
+**Print()**
+
+Print method prints the coefficients and coefficients names:
+
+```{r setup} 
 library(Lab04)
 data("iris")
 model_object<-linreg(Petal.Length~Species, data=iris)
 print(model_object)
 ```
 
+**Plot**
 
+It returns two plots: 
 
+1. The mean and the median results of the **Residuals vs Fitted Values**.
 
+1. The mean and the median results of the Standardized Residuals vs Fitted Values. **Scale-Location**
 
+```{r}
+library(Lab04)
+data("iris")
+model_object<-linreg(Petal.Length~Species, data=iris)
+plot.linreg(model_object)
+```
 
 
