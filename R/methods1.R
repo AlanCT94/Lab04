@@ -126,7 +126,7 @@ summary.linreg <- function(object,...){
 #' @param x linreg object
 #' @param ... arguments to be passed to methods
 #'
-#' @return ggplot object
+#' @return Makes two plots
 #' @export
 #'
 #' @examples
@@ -188,6 +188,26 @@ plot.linreg <- function(x, ...) {
   plot(pl2)
 
 }
+
+#' Make_plot
+#' 
+#' Help function to the plot.linreg function
+#'
+#' @param df data frame that contains the data to be plotted
+#' @param title title of the plot
+#' @param cpt caption
+#' @param xaxis x axis variable
+#' @param yaxis y axis variable
+#' @param xlab label for the x axis
+#' @param ylab label for the y axis
+#' @param cutoff_y_var cutoff variable for which the cutoff_y_val should be 
+#'                     applied (see cutoff_y_val)
+#' @param cutoff_y_val cutoff value for which id labels should be displayed
+#'                     for the variable as given in cutoff_y_var
+#' @param id variable that holds the id values of the observations
+#'
+#' @return ggplot object
+#' @export
 
 make_plot <- function(df, title, cpt, xaxis, yaxis, xlab, ylab, cutoff_y_var,
                       cutoff_y_val, id) {

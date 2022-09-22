@@ -12,7 +12,7 @@
 \item{...}{arguments to be passed to methods}
 }
 \value{
-ggplot object
+Makes two plots
 }
 \description{
 Plot
