@@ -51,13 +51,15 @@ print(model_object)
 
 **plot()**
 
-It returns two plots: 
+It returns two plots for model diagnostics: 
 
-1. **Residuals vs Fitted Values**values. Mean and median residuals for predicted values are indicated in the plot and joined by lines. 
+1. **Residuals vs Fitted Values**. Estimated mean and median residuals for predicted values are indicated in the plot and joined by lines. 
 
-1. The mean and the median results of the Standardized Residuals vs Fitted Values. **Scale-Location**
+1. **Scale-Location**. Squared absolute standardized residuals vs Fitted Values. 
+Estimated mean and median Squared absolute standardized residuals for predicted 
+values are indicated in the plot and joined by lines.
 
-```{r}
+```{r fig1, fig.height = 5, fig.width = 7, fig.align = "center"}
 plot(model_object)
 ```
 
@@ -82,7 +84,7 @@ pred(model_object)
 ```
 
 **coef()**
-It returns the regression coefficients of the Beta matrix.
+It returns the regression coefficients.
 ```{r}
 coef(model_object)
 ```
