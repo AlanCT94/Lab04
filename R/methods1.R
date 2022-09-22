@@ -80,7 +80,7 @@ pred <- function(object){
 #'           coef(s)
 coef.linreg <- function(object,...){
 
-  return(as.vector(object$coefficients))
+  return(object$coefficients)
 }
 #' Summary of linear regression function
 #'
