@@ -14,5 +14,5 @@ You can install the development version of this package from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("AlanCT94/Lab04")
+devtools::install_github("AlanCT94/Lab04", build_vignettes = TRUE)
 ```
