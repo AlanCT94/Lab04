@@ -49,7 +49,7 @@ linreg <- function(formula, data){
   #The t-values for each coefficient
   tB <- B/sqrt(diag(varB))                  #it has to be only the diagonal values of varB, because otherwise you took the variance and covariance of the formula
   #return(tB)                              # notice the difference of the notation between varB and varB with hat on the varB Lab4 pdf
-  #The p values
+  #The p  values
   p_v <- 2*stats::pt(abs(as.vector(tB)),df,lower.tail = FALSE)
 
   data1 <- format(deparse(substitute(data))) # extract the name of the data frame, before adding the parameter to the list
