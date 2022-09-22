@@ -30,7 +30,7 @@ make all the matrix calculations and return the characteristics.
 The information below is presented trough the following S3 methods/functions:
 
 
-**Print()**
+**print()**
 
 Print method prints the coefficients and coefficients names:
 
@@ -41,7 +41,7 @@ model_object<-linreg(Petal.Length~Species, data=iris)
 print(model_object)
 ```
 
-**Plot**
+**plot()**
 
 It returns two plots: 
 
@@ -50,10 +50,31 @@ It returns two plots:
 1. The mean and the median results of the Standardized Residuals vs Fitted Values. **Scale-Location**
 
 ```{r}
-library(Lab04)
-data("iris")
-model_object<-linreg(Petal.Length~Species, data=iris)
-plot.linreg(model_object)
+plot(model_object)
 ```
 
+**summary()**
 
+Ir returns a summary of the main characteristics of the *Linear Regression*, presented as a Data.frame class and one strings, using the function cat().
+
+```{r}
+summary(model_object)
+```
+
+**resid()**
+It returns the vector of residuals e_hat
+```{r}
+resid(model_object)
+```
+
+**pred()**
+It returns the predicted values y_hat
+```{r}
+pred(model_object)
+```
+
+**coef()**
+It returns the coefficients of the Beta matrix.
+```{r}
+coef(model_object)
+```
