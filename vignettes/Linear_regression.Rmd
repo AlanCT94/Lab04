@@ -40,7 +40,7 @@ The information below is presented trough the following S3 methods/functions:
 
 **print()**
 
-Print method prints the coefficients and coefficients names:
+Print method prints the model call and estimated coefficients:
 
 ```{r} 
 data("iris")
@@ -53,7 +53,7 @@ print(model_object)
 
 It returns two plots: 
 
-1. The mean and the median results of the **Residuals vs Fitted Values**.
+1. **Residuals vs Fitted Values**values. Mean and median residuals for predicted values are indicated in the plot and joined by lines. 
 
 1. The mean and the median results of the Standardized Residuals vs Fitted Values. **Scale-Location**
 
@@ -82,7 +82,7 @@ pred(model_object)
 ```
 
 **coef()**
-It returns the coefficients of the Beta matrix.
+It returns the regression coefficients of the Beta matrix.
 ```{r}
 coef(model_object)
 ```
