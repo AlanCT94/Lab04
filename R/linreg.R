@@ -78,6 +78,9 @@ ridgereg <- function(formula, data, lambda = 0){
   stopifnot(is.data.frame(data)) # check if it's data frame
   stopifnot(is.numeric(lambda), lambda >= 0) # check if lambda is a + number
 
+  if (sum(is.na(data)) > 0) {
+    stop("There are missing values (NA) in the data")
+  }
 
   # Extract the X and Y
   X <- stats::model.matrix(formula, data)
@@ -118,6 +121,3 @@ ridgereg <- function(formula, data, lambda = 0){
   class(ridgereg) = "ridgereg" #define the class of the list of results
   return(ridgereg)
 }
-
-
-
