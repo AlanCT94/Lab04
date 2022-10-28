@@ -40,7 +40,7 @@ print.ridgereg <- function(x, ...){
 #' @examples data(iris)
 #'           s<-ridgereg(formula=Petal.Length~Species, data=iris, 2)
 #'           predict(s)
-predict.ridgereg <- function(object, ndf, ...){
+predict.ridgereg <- function(object, ndf= NULL, ...){
   # we check the class of the object that comes from the function
   # we check that the data to predict is the same as the one using on the function
   # stopifnot(class(object) == "ridgereg") &

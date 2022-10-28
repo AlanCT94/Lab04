@@ -4,7 +4,7 @@
 \alias{predict.ridgereg}
 \title{Predict}
 \usage{
-\method{predict}{ridgereg}(object, ndf, ...)
+\method{predict}{ridgereg}(object, ndf = NULL, ...)
 }
 \arguments{
 \item{object}{Refers to the object return by ridge regression}
