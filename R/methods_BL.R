@@ -56,7 +56,7 @@ predict.ridgereg <- function(object, ndf= NULL, ...){
 
   #If the nargs(number of arguments) is 1, return the fitted values
   if(nargs() == 1){
-    y_pred <- object$y_hat
+    y_pred <- object$fitted_values
   }
   else if(nargs() > 1){  #If the nargs() > 1 there is a y values to predict
     stopifnot(is.data.frame(ndf)) #check that is a data frame
