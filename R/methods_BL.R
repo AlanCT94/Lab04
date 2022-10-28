@@ -80,3 +80,40 @@ coef.ridgereg <- function(object, ...){
   print(object$coefficients)
 }
 
+#' Root Mean Squared Error
+#'
+#' @param error residuals errors in model
+#'
+#' @return rmse_res root mean squared error value
+#' @export
+#'
+#' @examples
+#' data(iris)
+#' ridgeres <- ridgereg(formula= Sepal.Length ~ Petal.Length + Petal.Width,
+#' data = iris, lambda= 2)
+#' x= data.frame(Petal.Length= iris$Petal.Length, Petal.Width = iris$Petal.Width)
+#' rr_error <- iris$epal.Length-predict(ridgeres,x)
+#' rmse_ridge <- rmse(rr_error)
+rmse <- function(error){
+  rmse_res <- sqrt(mean(error^2))
+  return(rmse_res)
+}
+
+#' Mean Absolute Error
+#'
+#' @param error resiudals errors in model
+#'
+#' @return mae_res Mean absolute error value
+#' @export
+#'
+#' @examples
+#' data(iris)
+#' ridgeres <- ridgereg(formula= Sepal.Length ~ Petal.Length + Petal.Width,
+#' data = iris, lambda= 2)
+#' x= data.frame(Petal.Length= iris$Petal.Length, Petal.Width = iris$Petal.Width)
+#' rr_error <- iris$epal.Length-predict(ridgeres,x)
+#' mae_ridge <- mae(rr_error)
+mae <- function(error){
+  mae_res <- mean(abs(error))
+  return(mae_res)
+}
