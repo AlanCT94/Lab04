@@ -1,0 +1,320 @@
+---
+title: "Nycflights13"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Nycflights13}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Lab04)
+library(dplyr)
+library(caret)
+library(stats)
+library(nycflights13)
+library(ggplot2)
+library(GGally)
+```
+In this vignette, data from the nycflights13 package is modelled. The data concerns 
+flights that departed NYC in 2013. Here we are using ridge regression to predict arrival
+delay time, using data from the flights dataset as well as the weather dataset. The caret
+package is used to divide the data into training, validation and test set, as well as
+imputing missing values. The predictions are made using the ridgereg function in the 
+package Lab04.
+## Load data
+```{r}
+data(flights)
+data(weather)
+```
+## Number of variables and observations
+```{r}
+dim(flights)
+dim(weather)
+```
+## View data
+```{r}
+head(flights)
+head(weather)
+
+names(flights)
+names(weather)
+```
+## Inspect missing
+```{r}
+missing_flights <- flights %>% summarise_all(funs(sum(is.na(.))))
+
+(missing_flights_perc <- round(100*(missing_flights/nrow(flights)),2))
+
+missing_weather <- weather %>% summarise_all(funs(sum(is.na(.))))
+
+(missing_weather_perc <- round(100*(missing_weather/nrow(weather)),2))
+
+```
+Summary:
+- For flights data, max 2.8% of observations missing\n
+- For weather data, 80% missing for wind_gust, and 10.5% for pressure\n
+## Exclude observations with missing arr_delay
+```{r}
+flights_1a <- flights%>% filter(!is.na(arr_delay))
+```
+## Select variables
+```{r}
+#- Create weekday variable
+flights_2a <- mutate(flights_1a,weekday=weekdays(as.Date(substring(time_hour,1,10))))
+
+#- Remove variables:
+
+flights_2b <- select(flights_2a,-year,-day,-dep_time,-arr_time,-minute,-sched_dep_time)
+weather_1a <- select(weather,-year,-month,-day,-hour,-wind_gust)
+```
+## Join datasets
+```{r}
+flights_3a <- left_join(flights_2b, weather_1a,
+                        by = c("origin" = "origin", "time_hour"="time_hour"))
+
+#- Remove time_hour variable
+flights_3b <- select(flights_3a,-time_hour)
+
+```
+## Handle type of variable factor
+```{r}
+flights_4a <- mutate(flights_3b,
+                     flight = factor(flight),
+                     month = factor(month),
+                     weekday = factor(weekday),
+                     hour = factor(hour),
+                     carrier = factor(carrier),
+                     tailnum = factor(tailnum),
+                     origin = factor(origin),
+                     dest = factor(dest))
+```
+## Variable distributions, values
+```{r}
+summary(flights_4a)
+
+#- Number of factor levels
+str(select(flights_4a,month,  weekday, hour, carrier, flight, tailnum, origin,dest))
+
+#- Scatter plot matrices
+
+set.seed(42)
+data_scatter <- sample_n(flights_4a,1000)
+
+ggpairs((select(data_scatter, arr_delay,dep_delay,air_time,distance)))
+
+ggpairs((select(data_scatter, temp,dewp,humid,wind_speed,precip,pressure,visib)))
+
+#- Boxplots
+ggplot(data_scatter, aes(x = hour, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = hour)) +
+  xlab("Scheduled hour of departure") + ylab("Arrival delay")
+
+ggplot(data_scatter, aes(x = weekday, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = weekday)) +
+  xlab("Weekday of departure") + ylab("Arrival delay")
+
+ggplot(data_scatter, aes(x = month, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = month)) +
+  xlab("Month") + ylab("Arrival delay")
+
+ggplot(data_scatter, aes(x = origin, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = origin)) +
+  xlab("Origin") + ylab("Arrival delay")
+
+ggplot(data_scatter, aes(x = dest, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = dest)) +
+  xlab("Destination") + ylab("Arrival delay")
+
+ggplot(data_scatter, aes(x = carrier, y = arr_delay)) +
+  geom_boxplot(alpha = 0.1, aes(group = carrier)) +
+  xlab("Carrier") + ylab("Arrival delay")
+
+#- Tabulate
+ggplot(data_scatter, aes(x=temp)) + geom_histogram()
+ggplot(data_scatter, aes(x=dewp)) + geom_histogram()
+ggplot(data_scatter, aes(x=humid)) + geom_histogram()
+ggplot(data_scatter, aes(x=wind_speed)) + geom_histogram()
+ggplot(data_scatter, aes(x=precip)) + geom_histogram()
+ggplot(data_scatter, aes(x=pressure)) + geom_histogram()
+ggplot(data_scatter, aes(x=visib)) + geom_histogram()
+```
+## Investigate missing values and filter if too many missing
+```{r}
+flights_5a <- flights_4a
+flights_5a$perc_missing_row <-
+  apply(flights_5a, 1, function(x) round(100*(sum(is.na(x))/length(x)),2))
+
+flights_5a$perc_missing_row_e_p <-
+  apply(select(flights_5a,-pressure), 1,
+        function(x) round(100*(sum(is.na(x))/length(x)),2))
+
+
+table(flights_5a$perc_missing_row)
+
+table(flights_5a$perc_missing_row_e_p)
+
+flights_5b <- filter(flights_5a,perc_missing_row<5)
+
+table(flights_5b$perc_missing_row)
+
+table(flights_5b$perc_missing_row_e_p)
+
+#- Columns
+missing_cols <- flights_5b %>% summarise_all(funs(sum(is.na(.))))
+
+(missing_cols_perc <- round(100*(missing_cols/nrow(flights)),2))
+```
+## Investigate dest and carrier variables
+```{r}
+select_dest <- filter(flights_5b,dest=="LEX")
+
+by_dest <- dplyr::group_by(flights_5b, dest)
+
+count_dest <- dplyr::summarise(by_dest,
+                               count_dest = n())
+
+by_carrier <- dplyr::group_by(flights_5b, carrier)
+
+count_carrier <- dplyr::summarise(by_carrier,
+                                  count_carrier = n(),
+                                  count_missing = sum(is.na(arr_delay)),
+                                  perc_missing = (count_missing/count_carrier)*100,
+                                  delay_mean = mean(arr_delay, na.rm = TRUE),
+                                  .groups = "keep")
+
+arrange(count_dest,count_dest)
+arrange(count_carrier,count_carrier)
+
+
+```
+## Filter on dest > 100 counts
+```{r}
+flights_6a <- left_join(flights_5b, count_dest, by = c("dest" = "dest"))
+
+flights_6b <- filter(flights_6a,count_dest>=100)
+
+flights_6c <- mutate(flights_6b,dest = factor(dest))
+
+```
+
+## Divide into training, validation and test
+```{r}
+#- Set data for modelling
+
+data <- flights_6c
+
+set.seed(42)
+data <- sample_n(data,80000)
+
+data <- select(data, arr_delay, air_time, month, origin, dep_delay,
+               distance, hour, humid, temp,  wind_speed,
+               precip,visib,dewp,carrier,weekday, pressure, dest) #dest
+
+set.seed(42)
+inTrainVal <- caret::createDataPartition(y = data$arr_delay, p = .95,list = FALSE)
+train_val <- data[ inTrainVal,]
+testing <- data[-inTrainVal,]
+
+nrow(train_val)/nrow(data)
+nrow(testing)/nrow(data)
+
+set.seed(42)
+train_p <- 0.8/0.95
+inTrain <- caret::createDataPartition(y = train_val$arr_delay, p = train_p,list = FALSE)
+
+training <- train_val[ inTrain,]
+validation <- train_val[-inTrain,]
+
+nrow(training)/nrow(data)
+nrow(validation)/nrow(data)
+nrow(testing)/nrow(data)
+
+#- Convert to data frames
+training <- as.data.frame(training)
+validation <- as.data.frame(validation)
+testing <- as.data.frame(testing)
+
+```
+## Impute missing values
+```{r}
+
+set.seed(42)
+
+missing_model = preProcess(select(training,-arr_delay), "knnImpute")
+training_x_imp <- predict(missing_model, select(training,-arr_delay))
+validation_x_imp <- predict(missing_model, select(validation,-arr_delay))
+testing_x_imp <- predict(missing_model, select(testing,-arr_delay))
+
+training <- cbind(select(training,arr_delay),training_x_imp)
+validation <- cbind(select(validation,arr_delay),validation_x_imp)
+testing <- cbind(select(testing,arr_delay),testing_x_imp)
+
+```
+
+
+## Specify model
+```{r}
+formula <- arr_delay ~ . + precip*wind_speed
+training <- as.data.frame(training)
+grid_vec <- c(0,0.2,0.5,0.75,1,1.5,2,2.5,5)
+
+```
+## Fit models on training set for different lambda
+```{r}
+validation_error <- vector(mode="numeric",length=length(grid_vec))
+
+validation_x <- data.frame(model.matrix(object=formula, data=validation)[,-1])
+
+testing_x <- data.frame(model.matrix(object=formula, data=testing)[,-1])
+validation_y <- as.vector(unlist(validation[,all.vars(expr=formula)[1]]))
+testing_y <- as.vector(unlist(testing[,all.vars(expr=formula)[1]]))
+
+#- Change . to : to match with output from the ridge model
+names(validation_x) <- gsub("\\.",":", names(validation_x))
+names(testing_x) <- gsub("\\.",":", names(testing_x))
+
+for (i in seq_along(grid_vec)) {
+  lambda <- grid_vec[i]
+  rr_res_training <- ridgereg(formula=formula, data = training, lambda=lambda)
+  validation_error[i] <- rmse(validation_y-predict(rr_res_training,validation_x))
+}
+
+title <- c("RMSE validation set knn imputation")
+ylab <- c("RMSE")
+xlab <- c("lambda")
+df_selection <- data.frame(lambda=grid_vec,validation_error=validation_error)
+p1 <- ggplot(df_selection, aes(lambda, validation_error))+geom_point()+
+  labs(title=title, y=ylab, x=xlab)
+p1
+```
+## Plot RMSE for the different lambda values
+```{r}
+title <- c("RMSE validation set knn imputation")
+ylab <- c("RMSE")
+xlab <- c("lambda")
+df_selection <- data.frame(lambda=grid_vec,validation_error=validation_error)
+p1 <- ggplot(df_selection, aes(lambda, validation_error))+geom_point()+
+  labs(title=title, y=ylab, x=xlab)
+p1
+```
+\n
+## Calculate RMSE for selected lambda on test set
+Use training and validation set to construct the final model
+```{r}
+lambda <- 1.5
+train_val <- rbind(training,validation)
+rr_res_final <- ridgereg(formula, data = train_val,lambda=lambda)
+
+test_error <- rmse(testing_y-predict(rr_res_final,testing_x))
+print(test_error)
+
+```
+

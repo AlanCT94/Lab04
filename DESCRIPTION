@@ -13,6 +13,7 @@ RoxygenNote: 7.2.1
 Imports: stats,ggplot2,dplyr,nycflights13
 Suggests: 
     caret,
+    GGally,
     MASS,
     leaps,
     knitr,
