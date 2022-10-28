@@ -13,6 +13,7 @@ ridgereg <- function(formula, data, lambda = 0){
   stopifnot(class(formula) == "formula") #check if it's formula
   stopifnot(is.data.frame(data)) # check if it's data frame
   stopifnot(is.numeric(lambda), lambda >= 0) # check if lambda is a + number
+  data<- as.data.frame(data)
 
   if (sum(is.na(data)) > 0) {
     stop("There are missing values (NA) in the data")
@@ -25,6 +26,11 @@ ridgereg <- function(formula, data, lambda = 0){
 
 
   data1 <- format(deparse(substitute(data)))
+
+  if (!(dim(X)[2]>2)) {
+    stop("There must be at least two predictors")
+  }
+
   # Mean and sd of each column
   x_mean <- colMeans(X[,-1]) #We dont calculate the Interceptor column [,-1]
   sd_x <- apply(X[,-1], 2, stats::sd)
