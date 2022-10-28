@@ -174,7 +174,6 @@ missing_cols <- flights_5b %>% summarise_all(funs(sum(is.na(.))))
 ```
 ## Investigate dest and carrier variables
 ```{r}
-select_dest <- filter(flights_5b,dest=="LEX")
 
 by_dest <- dplyr::group_by(flights_5b, dest)
 
@@ -212,11 +211,11 @@ flights_6c <- mutate(flights_6b,dest = factor(dest))
 data <- flights_6c
 
 set.seed(42)
-data <- sample_n(data,80000)
+data <- sample_n(data,40000)
 
 data <- select(data, arr_delay, air_time, month, origin, dep_delay,
                distance, hour, humid, temp,  wind_speed,
-               precip,visib,dewp,carrier,weekday, pressure, dest) #dest
+               precip,visib,dewp,carrier,weekday, pressure, dest)
 
 set.seed(42)
 inTrainVal <- caret::createDataPartition(y = data$arr_delay, p = .95,list = FALSE)
@@ -264,7 +263,7 @@ testing <- cbind(select(testing,arr_delay),testing_x_imp)
 ```{r}
 formula <- arr_delay ~ . + precip*wind_speed
 training <- as.data.frame(training)
-grid_vec <- c(0,0.2,0.5,0.75,1,1.5,2,2.5,5)
+grid_vec <- c(0,0.5,0.75,1,1.5,2,5)
 
 ```
 ## Fit models on training set for different lambda
