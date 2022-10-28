@@ -19,6 +19,7 @@ library(Lab04)
 library(mlbench)
 library(caret)
 library(knitr)
+library(leaps)
 ```
 
 Load and preview the dataset:
