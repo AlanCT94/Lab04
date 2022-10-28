@@ -12,7 +12,7 @@
 #'           s<-ridgereg(formula=Petal.Length~Species, data=iris, 2)
 #'           print(s)
 print.ridgereg <- function(x, ...){
-  stopifnot(class(x) == "ridgereg")
+
   cat("", sep="\n\n")
 
   cat("Call:")
@@ -45,6 +45,10 @@ predict.ridgereg <- function(object, ndf, ...){
   # we check that the data to predict is the same as the one using on the function
   # stopifnot(class(object) == "ridgereg") &
   #   (names(...) %in% names(object$coefficients)[-1])
+
+  if (sum(is.na(ndf)) > 0) {
+    stop("There are missing values (NA) in the data")
+  }
 
   #Take B coefficients and B0 (interceptor)
   B_hat_c <- as.matrix(object$coefficients[-1])
